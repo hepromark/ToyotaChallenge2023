@@ -2,22 +2,34 @@ import torch
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
-import time
+from collections import namedtuple
+
 
 # Load model
 model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt') 
 
+# IOU
+# import the necessary packages
+# define the `Detection` object
+Detection = namedtuple("Detection", ["image_path", "gt", "pred"])
+
 def generate_boxes(camera_frame):
     frame = np.copy(camera_frame)
-    preds=[]
+    preds = False
     # Greyscale webcam input
     # Localize face with Haarcascade
     results = model(camera_frame) 
     if type(results!= None):
         for item in results.xywh[0]:
             item = item.numpy()
-            bottomL = (item[0][0] - item[2][0]/2, item[1][0] - item[3][0]/2)
-            topR = (item[0][0] + item[2][0]/2, item[1][0] + item[3][0]/2)
+            print("_____________")
+            print(type(item[0]))
+            print(type(item[1]))
+            print(type(item[2]))
+            print(type(item[3]))
+            print("_____________")
+            bottomL = (int(item[0] - item[2]/2), int(item[1] - item[3]/2))
+            topR = (int(item[0] + item[2]/2), int(item[1] + item[3]/2))
             cv2.rectangle(frame, bottomL, topR, (255,0,0), 2 )
 
     return frame, preds
