@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 2
+names: ['Hole', 'Sticker']
+
+roboflow:
+  workspace: waterloo-glu7k
+  project: sticker-or-hole
+  version: 5
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/waterloo-glu7k/sticker-or-hole/dataset/5
